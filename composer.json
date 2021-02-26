@@ -1,6 +1,6 @@
 {
-    "name": "mdmsoft/yii2-admin",
-    "description": "RBAC Auth manager for Yii2 ",
+    "name": "leodaddy19/yii2-admin",
+    "description": "RBAC Auth manager for Yii2 force from mdmsoft. Update for used multiple site applications",
     "keywords": ["yii", "admin", "auth", "rbac"],
     "type": "yii2-extension",
     "license": "BSD-3-Clause",
