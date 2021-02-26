@@ -44,11 +44,12 @@ class Assignment extends Model
      * @param  array                        $params
      * @param  \yii\db\ActiveRecord         $class
      * @param  string                       $usernameField
+     * @param  integer                      $siteId
      * @return \yii\data\ActiveDataProvider
      */
-    public function search($params, $class, $usernameField)
+    public function search($params, $class, $usernameField, $siteId)
     {
-        $query = $class::find();
+        $query = $class::find()->where(['site_id' => $siteId]);
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);

@@ -159,7 +159,7 @@ class Route extends \mdm\admin\BaseObject
         }
         $exists = [];
         foreach (array_keys($manager->getPermissions()) as $name) {
-            if ($name[0] !== $this->routePrefix) {
+            if (is_array($name) && $name[0] !== $this->routePrefix) {
                 continue;
             }
             $exists[] = $name;

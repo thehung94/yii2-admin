@@ -73,9 +73,9 @@ class RuleController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             Helper::invalidate();
 
-            return $this->redirect(['view', 'id' => $model->name]);
+            return $this->redirect(['view', 'id' => $model->name, 'site_id' => $siteId]);
         } else {
-            return $this->render('create', ['model' => $model,]);
+            return $this->render('create', ['model' => $model, 'site_id' => $siteId]);
         }
     }
 
@@ -87,14 +87,15 @@ class RuleController extends Controller
      */
     public function actionUpdate($id)
     {
+        $siteId = Yii::$app->request->get('site_id');
         $model = $this->findModel($id);
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             Helper::invalidate();
 
-            return $this->redirect(['view', 'id' => $model->name]);
+            return $this->redirect(['view', 'id' => $model->name, 'site_id' => $siteId]);
         }
 
-        return $this->render('update', ['model' => $model,]);
+        return $this->render('update', ['model' => $model, 'site_id' => $siteId]);
     }
 
     /**
@@ -109,7 +110,7 @@ class RuleController extends Controller
         Configs::authManager()->remove($model->item);
         Helper::invalidate();
 
-        return $this->redirect(['index']);
+        return $this->redirect(['index', 'site_id' => $siteId]);
     }
 
     /**

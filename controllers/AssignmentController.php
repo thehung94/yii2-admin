@@ -20,6 +20,7 @@ class AssignmentController extends Controller
     public $userClassName;
     public $idField = 'id';
     public $usernameField = 'username';
+    public $siteIdField = 'site_id';
     public $fullnameField;
     public $searchClass;
     public $extraColumns = [];
@@ -58,10 +59,10 @@ class AssignmentController extends Controller
      */
     public function actionIndex()
     {
-
+        $siteId = Yii::$app->request->get('site_id');
         if ($this->searchClass === null) {
             $searchModel = new AssignmentSearch;
-            $dataProvider = $searchModel->search(Yii::$app->getRequest()->getQueryParams(), $this->userClassName, $this->usernameField);
+            $dataProvider = $searchModel->search(Yii::$app->getRequest()->getQueryParams(), $this->userClassName, $this->usernameField, $siteId);
         } else {
             $class = $this->searchClass;
             $searchModel = new $class;
@@ -102,8 +103,9 @@ class AssignmentController extends Controller
     public function actionAssign($id)
     {
         $items = Yii::$app->getRequest()->post('items', []);
+        $siteId = Yii::$app->request->get('site_id');
         $model = new Assignment($id);
-        $success = $model->assign($items);
+        $success = $model->assign($items, $siteId);
         Yii::$app->getResponse()->format = 'json';
         return array_merge($model->getItems(), ['success' => $success]);
     }

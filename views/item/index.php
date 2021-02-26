@@ -43,7 +43,15 @@ unset($rules[RouteRule::RULE_NAME]);
                 'attribute' => 'description',
                 'label' => Yii::t('rbac-admin', 'Description'),
             ],
-            ['class' => 'yii\grid\ActionColumn',],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'buttons' => [
+                    'view' => function ($url, $model, $key) {
+                        $siteId = Yii::$app->request->get('site_id');
+                        return Html::a('<i class="fas fa-edit"></i>', $url . '&site_id='. $siteId);
+                    }
+                ],
+            ],
         ],
     ])
     ?>

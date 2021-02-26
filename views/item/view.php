@@ -19,7 +19,7 @@ $labels = $context->labels();
 $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('rbac-admin', $labels['Items']), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
-
+$siteId = Yii::$app->request->get('site_id');
 AnimateAsset::register($this);
 YiiAsset::register($this);
 $opts = Json::htmlEncode([
@@ -34,15 +34,15 @@ $animateIcon = ' <i class="glyphicon glyphicon-refresh glyphicon-refresh-animate
 <div class="auth-item-view">
     <h1><?= Html::encode($this->title); ?></h1>
     <p>
-        <?= Html::a(Yii::t('rbac-admin', 'Update'), ['update', 'id' => $model->name], ['class' => 'btn btn-primary']); ?>
+        <?= Html::a(Yii::t('rbac-admin', 'Update'), ['update', 'id' => $model->name, 'site_id' => $siteId], ['class' => 'btn btn-primary']); ?>
         <?=
-        Html::a(Yii::t('rbac-admin', 'Delete'), ['delete', 'id' => $model->name], [
+        Html::a(Yii::t('rbac-admin', 'Delete'), ['delete', 'id' => $model->name, 'site_id' => $siteId], [
             'class' => 'btn btn-danger',
             'data-confirm' => Yii::t('rbac-admin', 'Are you sure to delete this item?'),
             'data-method' => 'post',
         ]);
         ?>
-        <?= Html::a(Yii::t('rbac-admin', 'Create'), ['create'], ['class' => 'btn btn-success']); ?>
+        <?= Html::a(Yii::t('rbac-admin', 'Create'), ['create', 'site_id' => $siteId], ['class' => 'btn btn-success']); ?>
     </p>
     <div class="row">
         <div class="col-sm-11">
@@ -61,20 +61,6 @@ $animateIcon = ' <i class="glyphicon glyphicon-refresh glyphicon-refresh-animate
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-11">
-            <table class="table table-striped table-bordered">
-                <tbody>
-                    <tr>
-                        <th><?= Yii::t('rbac-admin', 'Assigned users'); ?></th>
-                    </tr>
-                    <tr>
-                        <td id="list-users"></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <div class="row">
         <div class="col-sm-5">
             <input class="form-control search" data-target="available"
                    placeholder="<?= Yii::t('rbac-admin', 'Search for available'); ?>">
@@ -83,14 +69,14 @@ $animateIcon = ' <i class="glyphicon glyphicon-refresh glyphicon-refresh-animate
         <div class="col-sm-1">
             <br><br>
             <?=
-            Html::a('&gt;&gt;' . $animateIcon, ['assign', 'id' => $model->name], [
+            Html::a('&gt;&gt;' . $animateIcon, ['assign', 'id' => $model->name, 'site_id' => $siteId], [
                 'class' => 'btn btn-success btn-assign',
                 'data-target' => 'available',
                 'title' => Yii::t('rbac-admin', 'Assign'),
             ]);
             ?><br><br>
             <?=
-            Html::a('&lt;&lt;' . $animateIcon, ['remove', 'id' => $model->name], [
+            Html::a('&lt;&lt;' . $animateIcon, ['remove', 'id' => $model->name, 'site_id' => $siteId], [
                 'class' => 'btn btn-danger btn-assign',
                 'data-target' => 'assigned',
                 'title' => Yii::t('rbac-admin', 'Remove'),

@@ -35,8 +35,9 @@ class RouteController extends Controller
      */
     public function actionIndex()
     {
+        $siteId = Yii::$app->request->get('site_id');
         $model = new Route();
-        return $this->render('index', ['routes' => $model->getRoutes()]);
+        return $this->render('index', ['routes' => $model->getRoutes(), 'site_id' => $siteId]);
     }
 
     /**

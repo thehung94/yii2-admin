@@ -21,9 +21,16 @@ if (!empty($extraColumns)) {
     $columns = array_merge($columns, $extraColumns);
 }
 $columns[] = [
-    'class' => 'yii\grid\ActionColumn',
-    'template' => '{view}'
+    'class' => '\yii\grid\ActionColumn',
+    'template' => '{view} {update} {delete}',
+    'buttons' => [
+        'view' => function ($url, $model, $key) {
+            $siteId = Yii::$app->request->get('site_id');
+            return Html::a('<i class="fas fa-edit"></i>', $url . '&site_id='. $siteId);
+        }
+    ],
 ];
+
 ?>
 <div class="assignment-index">
 

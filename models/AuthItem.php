@@ -259,7 +259,7 @@ class AuthItem extends Model
             }
         }
         foreach (array_keys($manager->getPermissions()) as $name) {
-            $available[$name] = $name[0] == '/' || $advanced && $name[0] == '@' ? 'route' : 'permission';
+            $available[$name] = (is_array($name) && $name[0] == '/') || $advanced && $name[0] == '@' ? 'route' : 'permission';
         }
 
         $assigned = [];

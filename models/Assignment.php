@@ -36,9 +36,10 @@ class Assignment extends \mdm\admin\BaseObject
     /**
      * Grands a roles from a user.
      * @param array $items
+     * @param array $items
      * @return integer number of successful grand
      */
-    public function assign($items)
+    public function assign($items, $siteId)
     {
         $manager = Configs::authManager();
         $success = 0;
@@ -46,7 +47,13 @@ class Assignment extends \mdm\admin\BaseObject
             try {
                 $item = $manager->getRole($name);
                 $item = $item ?: $manager->getPermission($name);
-                $manager->assign($item, $this->id);
+                Yii::$app->db->createCommand()
+                    ->insert('auth_assignment', [
+                        'user_id' => $this->id,
+                        'site_id' => $siteId,
+                        'item_name' => $item->name,
+                        'created_at' => time(),
+                    ])->execute();
                 $success++;
             } catch (\Exception $exc) {
                 Yii::error($exc->getMessage(), __METHOD__);
@@ -92,7 +99,7 @@ class Assignment extends \mdm\admin\BaseObject
         }
 
         foreach (array_keys($manager->getPermissions()) as $name) {
-            if ($name[0] != '/') {
+            if (is_array($name) && $name[0] != '/') {
                 $available[$name] = 'permission';
             }
         }

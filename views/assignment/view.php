@@ -15,7 +15,7 @@ if (!empty($fullnameField)) {
     $userName .= ' (' . ArrayHelper::getValue($model, $fullnameField) . ')';
 }
 $userName = Html::encode($userName);
-
+$siteId = Yii::$app->request->get('site_id');
 $this->title = Yii::t('rbac-admin', 'Assignment') . ' : ' . $userName;
 
 $this->params['breadcrumbs'][] = ['label' => Yii::t('rbac-admin', 'Assignments'), 'url' => ['index']];
@@ -42,7 +42,7 @@ $animateIcon = ' <i class="glyphicon glyphicon-refresh glyphicon-refresh-animate
         </div>
         <div class="col-sm-1">
             <br><br>
-            <?=Html::a('&gt;&gt;' . $animateIcon, ['assign', 'id' => (string) $model->id], [
+            <?=Html::a('&gt;&gt;' . $animateIcon, ['assign', 'id' => (string) $model->id, 'site_id' => $siteId], [
     'class' => 'btn btn-success btn-assign',
     'data-target' => 'available',
     'title' => Yii::t('rbac-admin', 'Assign'),
